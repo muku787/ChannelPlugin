@@ -1,0 +1,9 @@
+name: plugin
+main: plugin\Main
+version: "1.0.0"
+api: [1.12.0,2.0.0,3.0.0]
+load: POSTWORLD
+permissions:
+ channel:
+  default: true
+  description: channel選択用のformを呼び出します。
