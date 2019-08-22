@@ -48,8 +48,8 @@ class Channel {
 		$player->setDisplayName("[".$channelname."]".$player->getName());
 	}
 	
-	//public function leaveChannel(Player $player){
-		if(is_null($this->participation[PlayerData::get()->getPlayerChannel($player)])) return false;
+	public function leaveChannel(Player $player){
+		if(!in_array(PlayerData::get()->getPlayerChannel($player), $this->channels)) return false;
 		$part = array_diff($this->participation[PlayerData::get()->getPlayerChannel($player)], array($player));
 		$this->participation[PlayerData::get()->getPlayerChannel($player)] = array_values($part);
 	}
