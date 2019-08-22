@@ -23,6 +23,7 @@ class ChannelListener implements Listener {
 	public function onJoin(PlayerJoinEvent $event){
 		$player = $event->getPlayer();
 		if(!PlayerData::get()->isRegistration($player)) PlayerData::get()->Register($player);
+		Channel::get()->leaveChannel($player);
 		Channel::get()->joinGlobalChannel($player);
 	}
 	
@@ -51,6 +52,6 @@ class ChannelListener implements Listener {
 	}
 	
 	public function onQuit(PlayerQuitEvent $event){
-		Channel::get()->leaveChannel($event->getPlayer());
+		Channel::get()->leaveChannel($player);
 	}
 }

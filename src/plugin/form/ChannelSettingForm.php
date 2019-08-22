@@ -72,9 +72,11 @@ class ChannelSettingForm extends Form {
 				
 			case 5:
 				if($this->lastData === 0){
+					Channel::get()->leaveChannel($this->player);
 					Channel::get()->joinGlobalChannel($this->player);
 					$content = "グローバルチャットに参加しました。";
 				}else{
+					Channel::get()->leaveChannel($this->player);
 					Channel::get()->joinChannel($this->player, Channel::get()->getChannelName($this->lastData - 1));
 					$content = "チャンネル|".Channel::get()->getChannelName($this->lastData - 1)."|に参加しました。";
 				}

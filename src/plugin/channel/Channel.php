@@ -20,7 +20,6 @@ class Channel {
 	public function __construct($plugin){
 		$this->plugin = $plugin;
 		$this->channels = ChannelData::get()->getAllChannel();
-		var_dump($this->channels);
 		foreach($this->channels as $channel){
 			$this->participation[$channel] = [];
 		}
@@ -34,26 +33,27 @@ class Channel {
 	}
 	
 	public function deleteChannel(String $name){
+		foreach($this->participation[$name] as $player){
+			$this->leaveChannel($player);
+		}
 		$channels = array_diff($this->channels, array($name));
 		$this->channels = array_values($channels);
 		ChannelData::get()->setChannel($this->channels);
 	}
 	
 	public function joinChannel(Player $player, String $channelname){
-		$part = array_diff($this->participation[PlayerData::get()->getPlayerChannel($player)], array($player));
-		$this->participation[PlayerData::get()->getPlayerChannel($player)] = array_values($part);
 		$this->participation[$channelname][] = $player;
 		PlayerData::get()->setPlayerChannel($player, $channelname);
 		$player->setDisplayName("[".$channelname."]".$player->getName());
 	}
 	
 	public function leaveChannel(Player $player){
-		$this->joinGlobalChannel($player);
+		if($this->participation[PlayerData::get()->getPlayerChannel($player)) return false;
+		$part = array_diff($this->participation[PlayerData::get()->getPlayerChannel($player)], array($player));
+		$this->participation[PlayerData::get()->getPlayerChannel($player)] = array_values($part);
 	}
 	
 	public function joinGlobalChannel(Player $player){
-		$part = array_diff($this->participation[PlayerData::get()->getPlayerChannel($player)], array($player));
-		$this->participation[PlayerData::get()->getPlayerChannel($player)] = array_values($part);
 		$this->participation[self::CHANNEL_GLOBAL][] = $player;
 		PlayerData::get()->setPlayerChannel($player, self::CHANNEL_GLOBAL);
 		$player->setDisplayName("[".self::CHANNEL_GLOBAL."]".$player->getName());
