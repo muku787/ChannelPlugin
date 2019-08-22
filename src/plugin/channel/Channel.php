@@ -35,6 +35,7 @@ class Channel {
 	public function deleteChannel(String $name){
 		foreach($this->participation[$name] as $player){
 			$this->leaveChannel($player);
+			$this->joinGlobalChannel($player);
 		}
 		$channels = array_diff($this->channels, array($name));
 		$this->channels = array_values($channels);

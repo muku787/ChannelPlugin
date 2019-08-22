@@ -25,6 +25,7 @@ class PlayerData extends DataFile{
 	}
 	
 	public function getShowGlobal(IPlayer $player){
+		if(is_null($this->data[$player->getName()][Channel::CHANNEL_GLOBAL])) return true;
 		return $this->data[$player->getName()][Channel::CHANNEL_GLOBAL];
 	}
 	
@@ -33,6 +34,7 @@ class PlayerData extends DataFile{
 	}
 	
 	public function getPlayerChannel(IPlayer $player){
+		if(is_null($this->data[$player->getName()][self::KEY])) return Channel::CHANNEL_GLOBAL;
 		return $this->data[$player->getName()][self::KEY];
 	}
 		
