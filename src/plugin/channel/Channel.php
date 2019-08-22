@@ -49,6 +49,7 @@ class Channel {
 	}
 
 	public function leaveChannel(Player $player){
+		$this->aaa = 'g';
 		if(!isset($this->participation[PlayerData::get()->getPlayerChannel($player)])) return false;
 		$part = array_diff($this->participation[PlayerData::get()->getPlayerChannel($player)], array($player));
 		$this->participation[PlayerData::get()->getPlayerChannel($player)] = array_values($part);
