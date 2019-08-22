@@ -52,6 +52,6 @@ class ChannelListener implements Listener {
 	}
 	
 	public function onQuit(PlayerQuitEvent $event){
-		Channel::get()->leaveChannel($player);
+		Channel::get()->leaveChannel($event->getPlayer());
 	}
 }
